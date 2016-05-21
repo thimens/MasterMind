@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Mastermind.Application
 {
-    class GuessAppService : AppServiceBase<Guess>, IGuessAppService
+    public class GuessAppService : AppServiceBase<Guess>, IGuessAppService
     {
         public GuessAppService(IDbContextScopeFactory dbContextFactory, IGuessService service) : base(dbContextFactory, service) { }
     }

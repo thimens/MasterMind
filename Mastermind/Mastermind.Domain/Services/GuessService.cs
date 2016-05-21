@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Mastermind.Domain.Services
 {
-    class GuessService : ServiceBase<Guess>, IGuessService
+    public class GuessService : ServiceBase<Guess>, IGuessService
     {
         public GuessService(IRepositoryBase<Guess> repository) : base(repository) { }
     }
