@@ -33,6 +33,6 @@ namespace Mastermind.Infra.Data.Context
             modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
 
             base.OnModelCreating(modelBuilder);
-        }
+        }        
     }
 }

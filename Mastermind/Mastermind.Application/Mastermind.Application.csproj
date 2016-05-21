@@ -40,10 +40,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppServiceBase.cs" />
     <Compile Include="Interfaces\IAppServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Mastermind.Domain\Mastermind.Domain.csproj">
+      <Project>{5973A144-55F9-46E1-9075-3730EFBCFD68}</Project>
+      <Name>Mastermind.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mastermind.Infra.Data\Mastermind.Infra.Data.csproj">
+      <Project>{67DBD4F2-09AD-4E61-BABF-DE5226516638}</Project>
+      <Name>Mastermind.Infra.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

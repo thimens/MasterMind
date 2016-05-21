@@ -12,34 +12,18 @@ namespace Mastermind.Infra.Data.Repositories
 {
     public class RepositoryBase<TEntity> : IDisposable, IRepositoryBase<TEntity> where TEntity : class
     {
-        protected readonly DbContext _contextLocator;
+        protected readonly ApplicationDbContext _dbContext;
 
-        protected ApplicationDbContext DbContext
+        protected readonly DbSet<TEntity> _dbSet;
+
+        public RepositoryBase(ApplicationDbContext dbContext)
         {
-            get
-            {
-                var dbContext = _contextLocator.Get<ApplicationDbContext>();
-
-                if (dbContext == null)
-                    throw new InvalidOperationException("No ambient DbContext of type ApplicationDbContext found. This means that this repository method has been called outside of the scope of a DbContextScope. A repository must only be accessed within the scope of a DbContextScope, which takes care of creating the DbContext instances that the repositories need and making them available as ambient contexts. This is what ensures that, for any given DbContext-derived type, the same instance is used throughout the duration of a business transaction. To fix this issue, use IDbContextScopeFactory in your top-level business logic service method to create a DbContextScope that wraps the entire business transaction that your service method implements. Then access this repository within that scope. Refer to the comments in the IDbContextScope.cs file for more details.");
-
-                return dbContext;
-            }
-        }
-
-        protected DbSet<TEntity> DbSet
-        {
-            get { return this.DbContext.Set<TEntity>(); }
-        }
-
-        public RepositoryBase(IAmbientDbContextLocator contextLocator)
-        {
-            _contextLocator = contextLocator;
+            _dbContext = dbContext;
         }
 
         public virtual async Task<IEnumerable<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includeProperties)
         {
-            IQueryable<TEntity> query = this.DbSet;
+            IQueryable<TEntity> query = this._dbSet;
 
             if (filter != null)
                 query = query.Where(filter);
@@ -55,32 +39,32 @@ namespace Mastermind.Infra.Data.Repositories
 
         public virtual async Task<TEntity> GetAsync(object id)
         {
-            return await this.DbSet.FindAsync(id);
+            return await this._dbSet.FindAsync(id);
         }
 
         public virtual void Add(TEntity entity)
         {
-            this.DbSet.Add(entity);
+            this._dbSet.Add(entity);
         }
 
         public virtual void Remove(object id)
         {
-            TEntity entityToDelete = this.DbSet.Find(id);
+            TEntity entityToDelete = this._dbSet.Find(id);
             Remove(entityToDelete);
         }
 
         public virtual void Remove(TEntity entity)
         {
-            if (this.DbContext.Entry(entity).State == EntityState.Detached)
-                this.DbSet.Attach(entity);
+            if (this._dbContext.Entry(entity).State == EntityState.Detached)
+                this._dbSet.Attach(entity);
 
-            this.DbSet.Remove(entity);
+            this._dbSet.Remove(entity);
         }
 
         public virtual void Update(TEntity entity)
         {
-            this.DbSet.Attach(entity);
-            this.DbContext.Entry(entity).State = EntityState.Modified;
+            this._dbSet.Attach(entity);
+            this._dbContext.Entry(entity).State = EntityState.Modified;
         }
 
         public void Dispose()
