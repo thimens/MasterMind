@@ -13,5 +13,7 @@ namespace Mastermind.Application
     public class GameAppService : AppServiceBase<Game>, IGameAppService
     {
         public GameAppService(IDbContextScopeFactory dbContextFactory, IGameService service) : base(dbContextFactory, service) { }
+
+      
     }
 }
