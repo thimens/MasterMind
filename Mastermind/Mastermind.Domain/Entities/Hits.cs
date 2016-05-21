@@ -1,4 +1,4 @@
-﻿namespace Mastermind.Domain.Services
+﻿namespace Mastermind.Domain.Entities
 {
     public class Hits
     {

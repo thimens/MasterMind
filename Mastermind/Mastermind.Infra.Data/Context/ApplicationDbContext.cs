@@ -22,7 +22,7 @@ namespace Mastermind.Infra.Data.Context
         }
 
         public virtual DbSet<Game> Game { get; set; }
-        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Player> User { get; set; }
         public virtual DbSet<Guess> Guess { get; set; }
 
 

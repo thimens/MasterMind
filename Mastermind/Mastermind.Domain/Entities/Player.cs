@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Mastermind.Domain.Entities
 {
-    public class User
+    public class Player
     {
     }
 }

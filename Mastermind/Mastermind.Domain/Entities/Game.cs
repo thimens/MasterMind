@@ -8,6 +8,8 @@ namespace Mastermind.Domain.Entities
 {
     public class Game
     {
-
+        public string Id { get; set; }
+        public bool Mutiplayer { get; set; }
+        public List<Color> Sequence { get; set; }
     }
 }

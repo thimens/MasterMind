@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace Mastermind.Domain.Services
 {
-    public class UserService : ServiceBase<User>, IUserService
+    public class PlayerService : ServiceBase<Player>, IPlayerService
     {
-        public UserService(IRepositoryBase<User> repository) : base(repository) { }
+        public PlayerService(IRepositoryBase<Player> repository) : base(repository) { }
     }
 }

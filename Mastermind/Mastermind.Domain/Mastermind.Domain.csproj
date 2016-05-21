@@ -43,18 +43,18 @@
     <Compile Include="Entities\Color.cs" />
     <Compile Include="Entities\Game.cs" />
     <Compile Include="Entities\Guess.cs" />
-    <Compile Include="Entities\User.cs" />
+    <Compile Include="Entities\Player.cs" />
     <Compile Include="Interfaces\Repositories\IRepositoryBase.cs" />
     <Compile Include="Interfaces\Services\IGameService.cs" />
     <Compile Include="Interfaces\Services\IGuessService.cs" />
     <Compile Include="Interfaces\Services\IServiceBase.cs" />
-    <Compile Include="Interfaces\Services\IUserService.cs" />
+    <Compile Include="Interfaces\Services\IPlayerService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\GameService.cs" />
     <Compile Include="Services\GuessService.cs" />
-    <Compile Include="Services\Hits.cs" />
+    <Compile Include="Entities\Hits.cs" />
     <Compile Include="Services\ServiceBase.cs" />
-    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\PlayerService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

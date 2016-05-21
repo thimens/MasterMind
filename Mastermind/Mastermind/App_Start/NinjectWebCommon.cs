@@ -71,7 +71,7 @@ namespace Mastermind.App_Start
 
             kernel.Bind(typeof(IServiceBase<>)).To(typeof(ServiceBase<>));
             kernel.Bind<IGameService>().To<GameService>();
-            kernel.Bind<IUserService>().To<UserService>();
+            kernel.Bind<IPlayerService>().To<PlayerService>();
             kernel.Bind<IGuessService>().To<GuessService>();
 
 

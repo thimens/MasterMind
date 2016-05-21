@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Mastermind.Domain.Interfaces.Services
 {
-    public interface IUserService : IServiceBase<User>
+    public interface IPlayerService : IServiceBase<Player>
     {
     }
 }
