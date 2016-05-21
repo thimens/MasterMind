@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Color.cs" />
     <Compile Include="Entities\Game.cs" />
     <Compile Include="Entities\Guess.cs" />
     <Compile Include="Entities\User.cs" />
