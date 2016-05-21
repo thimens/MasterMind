@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Mastermind.Application.Interfaces;
 using Mastermind.Domain.Interfaces.Repositories;
 using Mastermind.Infra.Data.Context;
-using VisaFactory.Domain.Interfaces.Services;
+using Mastermind.Domain.Interfaces.Services;
 using Mehdime.Entity;
 
 namespace Mastermind.Application

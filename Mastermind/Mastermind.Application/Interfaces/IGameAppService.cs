@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Mastermind.Domain.Interfaces.Services
+namespace Mastermind.Application.Interfaces
 {
-    public interface IUserService : IServiceBase<User>
+    public interface IGameAppService : IAppServiceBase<Game>
     {
     }
 }
