@@ -7,57 +7,77 @@ using System.Threading.Tasks;
 using Mastermind.Application.Interfaces;
 using Mastermind.Domain.Interfaces.Repositories;
 using Mastermind.Infra.Data.Context;
+using VisaFactory.Domain.Interfaces.Services;
+using Mehdime.Entity;
 
 namespace Mastermind.Application
 {
     public class AppServiceBase<TEntity> : IDisposable, IAppServiceBase<TEntity> where TEntity : class
     {
-        protected readonly IRepositoryBase<TEntity> _repository;
-        protected readonly ApplicationDbContext _dbContext;
+        protected readonly IServiceBase<TEntity> _service;
+        protected readonly IDbContextScopeFactory _dbContextFactory;
 
-        public AppServiceBase(ApplicationDbContext dbContext, IRepositoryBase<TEntity> repository)
+        public AppServiceBase(IDbContextScopeFactory dbContextFactory, IServiceBase<TEntity> service)
         {
-            _repository = repository;
-            _dbContext = dbContext;
+            _service = service;
+            _dbContextFactory = dbContextFactory;
         }
 
         public async Task<TEntity> GetAsync(object id)
         {
-            return await _repository.GetAsync(id);
+            using (var dbContextScope = _dbContextFactory.CreateReadOnly())
+            {
+                return await _service.GetAsync(id);
+            }
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
-            return await _repository.GetAsync();
+            using (var dbContextScope = _dbContextFactory.CreateReadOnly())
+            {
+                return await _service.GetAllAsync();
+            }
         }
 
         public void Add(TEntity entity)
         {
-            _repository.Add(entity);
-            _dbContext.SaveChanges();
+            using (var dbContextScope = _dbContextFactory.Create())
+            {
+                _service.Add(entity);
+                dbContextScope.SaveChanges();
+            }
         }
 
         public void Remove(object id)
         {
-            _repository.Remove(id);
-            _dbContext.SaveChanges();
+            using (var dbContextScope = _dbContextFactory.Create())
+            {
+                _service.Remove(id);
+                dbContextScope.SaveChanges();
+            }
         }
 
         public void Remove(TEntity entity)
         {
-            _repository.Remove(entity);
-            _dbContext.SaveChanges();
+            using (var dbContextScope = _dbContextFactory.Create())
+            {
+                _service.Remove(entity);
+                dbContextScope.SaveChanges();
+            }
         }
 
         public void Update(TEntity entity)
         {
-            _repository.Update(entity);
-            _dbContext.SaveChanges();
+            using (var dbContextScope = _dbContextFactory.Create())
+            {
+                _service.Update(entity);
+                dbContextScope.SaveChanges();
+            }
         }
 
         public void Dispose()
         {
-            _repository.Dispose();
+            _service.Dispose();
         }
     }
 }
