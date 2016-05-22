@@ -12,6 +12,7 @@ namespace Mastermind.Domain.Entities
         {            
             this.Colors = ConfigurationManager.AppSettings["colors"].Split(',');
             this.SequenceLength = int.Parse(ConfigurationManager.AppSettings["sequenceLength"]);
+            this.CreationDate = DateTime.Now;
             this.Players = new HashSet<Player>();
             this.Guesses = new HashSet<Guess>();
             this.Sequence = GenerateSecretSequence();
@@ -19,7 +20,7 @@ namespace Mastermind.Domain.Entities
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         public int NumberOfPlayers { get; set; }

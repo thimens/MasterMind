@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 
@@ -6,13 +7,14 @@ namespace Mastermind.Domain.Entities
 {
     public class Guess
     {
+        [Key]
+        public int Id { get; set; }
+
         [Index("idx_gId_pId", 0)]
-        [ForeignKey("Game")]
-        public string GameId { get; set; }
+        public Guid GameId { get; set; }
 
         [Index("idx_gId_pId", 1)]
-        [ForeignKey("Player")]
-        public string PlayerId { get; set; }
+        public Guid PlayerId { get; set; }
 
         [Required]
         [MaxLength(15)]

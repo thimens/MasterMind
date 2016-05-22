@@ -51,7 +51,7 @@ namespace Mastermind.Application
             }
         }
 
-        public Game Guess(string playerId, string gameId, string sequence)
+        public Game Guess(Guid playerId, Guid gameId, string sequence)
         {
             using (IDbContextScope contextScope = _dbContextFactory.Create())
             {
@@ -100,7 +100,7 @@ namespace Mastermind.Application
             }
         }
 
-        public Game Join(string playerName, string gameId)
+        public Game Join(string playerName, Guid gameId)
         {
             using (IDbContextScope contextScope = _dbContextFactory.Create())
             {

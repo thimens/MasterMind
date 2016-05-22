@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -13,7 +14,7 @@ namespace Mastermind.Domain.Entities
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required]
         [MaxLength(30)]
@@ -23,7 +24,7 @@ namespace Mastermind.Domain.Entities
         public bool Winner { get; set; }
 
         [Required]
-        public string GameId { get; set; }
+        public Guid GameId { get; set; }
 
         public virtual Game Game { get; set; }
         public ICollection<Guess> Guesses { get; set; }

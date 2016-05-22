@@ -20,6 +20,7 @@ namespace Mastermind
             );
 
             config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+            config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 
             config.Filters.Add(new ValidateModelAttribute());
             config.Filters.Add(new ExceptionStatusFilterAttribute());

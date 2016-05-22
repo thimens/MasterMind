@@ -50,6 +50,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\ApplicationDbContext.cs" />
+    <Compile Include="Migrations\201605220802484_initial.cs" />
+    <Compile Include="Migrations\201605220802484_initial.Designer.cs">
+      <DependentUpon>201605220802484_initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\RepositoryBase.cs" />
@@ -63,6 +67,15 @@
       <Project>{5973A144-55F9-46E1-9075-3730EFBCFD68}</Project>
       <Name>Mastermind.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mehdime.Entity\Mehdime.Entity.csproj">
+      <Project>{4830BAFD-4163-473E-B00F-65F274AC165F}</Project>
+      <Name>Mehdime.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201605220802484_initial.resx">
+      <DependentUpon>201605220802484_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
