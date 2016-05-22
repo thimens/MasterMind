@@ -1,4 +1,5 @@
-﻿using Mastermind.Domain.Entities;
+﻿using System.Drawing;
+using Mastermind.Domain.Entities;
 namespace Mastermind.Models
 {
     public class InitialGameUserData

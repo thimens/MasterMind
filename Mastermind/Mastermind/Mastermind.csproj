@@ -209,7 +209,6 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MastermindController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Filters\ExceptionStatusFilterAttribute.cs" />
     <Compile Include="Filters\ValidateModelAttribute.cs" />
     <Compile Include="Global.asax.cs">
