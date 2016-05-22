@@ -1,6 +1,7 @@
 ﻿using Mastermind.Filters;
 using Newtonsoft.Json;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace Mastermind
 {
@@ -8,9 +9,9 @@ namespace Mastermind
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            var cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cors);
 
-            // Web API routes
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
