@@ -35,23 +35,42 @@ namespace Mastermind.Domain.Entities
             var near = 0;
             var exact = 0;
 
-            string found = string.Empty;
+            var colorsCount = secretCombination.GroupBy(x => x)
+                .Select(group => new
+                {
+                    id = group.Key,
+                    Count = group.Count()
+                });
+
+            var guessColorsCount = Sequence.GroupBy(x => x)
+                .Select(group => new
+                {
+                    id = group.Key,
+                    Count = group.Count()
+                });
+
+            foreach (var guessColor in guessColorsCount)
+            {
+                var colorFound = colorsCount.FirstOrDefault(c => c.id == guessColor.id);
+                if (colorFound != null)
+                {
+                    if (colorFound.Count <= guessColor.Count)
+                    {
+                        near += colorFound.Count;
+                    }
+                    else
+                    {
+                        near += guessColor.Count;
+                    }
+                }
+            }
+
 
             for (int i = 0; i < secretCombination.Length; i++)
             {
-                if (secretCombination.Any(x => x == this.Sequence[i]))
-                {
-                    if (!found.Any(x => x == this.Sequence[i]))
-                    {
-                        near++;                        
-                        found += this.Sequence[i];
-                    }
-                }
-
                 if (secretCombination[i] == this.Sequence[i])
                 {
-                    if (found.Any(x => x == this.Sequence[i]) && near > 0)
-                        near--;
+                    if (near > 0) near--;
                     exact++;
                 }
             }
