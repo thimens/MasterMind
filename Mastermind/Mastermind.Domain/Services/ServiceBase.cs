@@ -16,7 +16,6 @@ namespace Mastermind.Domain.Services
             _repository = repository;
         }
 
-
         public async Task<TEntity> GetAsync(object id)
         {
             return await _repository.GetAsync(id);
