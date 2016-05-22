@@ -3,26 +3,27 @@ using System.Web.Http;
 using Mastermind.Models;
 using Mastermind.Application.Interfaces;
 using Mastermind.Domain.Entities;
-using Mastermind.Models;
-using System;
 using System.Threading.Tasks;
+using System.Linq;
+using AutoMapper;
 
 namespace Mastermind.Controllers
 {
     public class MastermindController : ApiController
     {
         private readonly IGameAppService _gameAppService;
+        private readonly IMapper _mapper;
 
-        public MastermindController(IGameAppService gameAppService)
+        public MastermindController(IGameAppService gameAppService, IMapper mapper)
         {
             _gameAppService = gameAppService;
+            _mapper = mapper;
         }
+
         [HttpPost]
-        public Game NewGame([FromBody] NewGameModel model)
+        public GameResultModel NewGame([FromBody] NewGameModel model)
         {
-            return _gameAppService.Create(model.Nickname, model.NumberOfPlayers);
-            // iniciar jogo
-            //return new InitialGameUserData();
+            return _mapper.Map<Game, GameResultModel>(_gameAppService.Create(model.Nickname, model.NumberOfPlayers));
         }
 
         [HttpPost]

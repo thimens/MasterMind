@@ -9,7 +9,6 @@ namespace Mastermind.Domain.Services
 {
     public class GuessService : ServiceBase<Guess>, IGuessService
     {
-
         public GuessService(IRepositoryBase<Guess> repository) : base(repository) { }
 
         public Task<IEnumerable<Guess>> GetAllByGame(Guid gameId)

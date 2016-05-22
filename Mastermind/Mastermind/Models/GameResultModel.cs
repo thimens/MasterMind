@@ -8,11 +8,14 @@ namespace Mastermind.Models
 {
     public class GameResultModel
     {
-        public string GameId { get; set; }
-        public int PlayerId { get; set; }
+        public Guid GameId { get; set; }
+        public Guid PlayerId { get; set; }
         public int NumberOfPlayers { get; set; }
         public string Status { get; set; }
         public int Round { get; set; }
+        public string[] Colors { get; set; }
+        public int SequenceLength { get; set; }
         public GuessResultModel Guess { get; set; }
+        public List<PlayerResultModel> Players { get; set; }
     }
 }

@@ -44,6 +44,9 @@ namespace Mastermind.Domain.Entities
         [NotMapped]
         public int SequenceLength { get; private set; } 
 
+        [NotMapped]
+        public Guid PlayerId { get; set; }
+
 
 
         private string GenerateSecretSequence()

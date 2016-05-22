@@ -17,6 +17,8 @@ namespace Mastermind.App_Start
     using Application;
     using Domain.Services;
     using Infra.Data.Repositories;
+    using global::AutoMapper;
+    using AutoMapper;
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -79,11 +81,11 @@ namespace Mastermind.App_Start
             kernel.Bind<IDbContextScopeFactory>().ToConstructor(ctorArg => new DbContextScopeFactory(null));
             kernel.Bind<IAmbientDbContextLocator>().To<AmbientDbContextLocator>();
 
-            kernel.Bind(typeof(IAppServiceBase<>)).To(typeof(AppServiceBase<>));
+            //kernel.Bind(typeof(IAppServiceBase<>)).To(typeof(AppServiceBase<>));
             kernel.Bind<IGameAppService>().To<GameAppService>();
             //kernel.Bind<IGuessAppService>().To<GuessAppService>();
 
-            //kernel.Bind<IMapper>().ToConstant<IMapper>(AutoMapperConfig.RegisterMappings()).InSingletonScope();
+            kernel.Bind<IMapper>().ToConstant<IMapper>(AutoMapperConfig.RegisterMappings()).InSingletonScope();
         }
     }
 }

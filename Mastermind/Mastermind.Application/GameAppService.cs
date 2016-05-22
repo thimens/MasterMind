@@ -39,6 +39,8 @@ namespace Mastermind.Application
                 _gameService.Add(game);
                 contextScope.SaveChanges();
 
+                game.PlayerId = player.Id;
+
                 return game;
             }            
         }
@@ -95,7 +97,10 @@ namespace Mastermind.Application
                     game.Players.First(p => p.Id == playerId).Winner = true;
                 }
 
+                //add guess to game
                 game.Guesses.Add(guess);
+
+                game.PlayerId = playerId;
 
                 _gameService.Update(game);
                 contextScope.SaveChanges();
@@ -129,6 +134,8 @@ namespace Mastermind.Application
                 //update database
                 _gameService.Update(game);
                 contextScope.SaveChanges();
+
+                game.PlayerId = player.Id;
 
                 return game;
             }
