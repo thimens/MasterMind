@@ -16,3 +16,5 @@ namespace Mastermind.Models
         public List<PlayerResultModel> Players { get; set; }
     }
 }
+
+

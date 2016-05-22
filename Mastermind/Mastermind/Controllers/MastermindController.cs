@@ -29,13 +29,6 @@ namespace Mastermind.Controllers
         public async Task<GameResultModel> JoinGame([FromBody] JoinGameModel model)
         {
             return _mapper.Map<Game, GameResultModel>(await _gameAppService.Join(model.Nickname, model.GameId));
-            // Verificar:
-            //   - gameId existe?
-            //   - Jogo está em andamento?
-            //   - Jogo já possui 2 jogadores?
-            //
-            // Se tudo ok, incluir este usuário no jogo
-            //return new InitialGameUserData();
         }
 
         [HttpPost]
