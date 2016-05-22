@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Mastermind.Filters;
+using Newtonsoft.Json;
 using System.Web.Http;
 
 namespace Mastermind
@@ -19,6 +18,11 @@ namespace Mastermind
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            config.Formatters.JsonFormatter.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+
+            config.Filters.Add(new ValidateModelAttribute());
+            config.Filters.Add(new ExceptionStatusFilterAttribute());
         }
     }
 }

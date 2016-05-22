@@ -1,42 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Mastermind.Domain.Entities
 {
     public class Guess
     {
+        [Index("idx_gId_pId", 0)]
+        [ForeignKey("Game")]
         public string GameId { get; set; }
-        public string UserId { get; set; }
-        public List<Color> Sequence { get; set; }
+
+        [Index("idx_gId_pId", 1)]
+        [ForeignKey("Player")]
+        public string PlayerId { get; set; }
+
+        [Required]
+        [MaxLength(15)]
+        public string Sequence { get; set; }
+
+        [Required]
         public int NearCount { get; set; }
+
+        [Required]
         public int ExactCount { get; set; }
 
+        public virtual Game Game { get; set; }
+        public virtual Player Player { get; set; }
 
-        public void CheckHits(Color[] secretCombination)
+
+        public void CheckHits(string secretCombination)
         {
             var near = 0;
             var exact = 0;
 
-            Color[] found = new Color[0];
+            string found = string.Empty;
 
-            for (int i = 0; i < secretCombination.Count(); i++)
+            for (int i = 0; i < secretCombination.Length; i++)
             {
-                if (secretCombination.Any(x => x == Sequence[i]))
+                if (secretCombination.Any(x => x == this.Sequence[i]))
                 {
-                    if (!found.Any(x => x == Sequence[i]))
+                    if (!found.Any(x => x == this.Sequence[i]))
                     {
-                        near++;
-                        Array.Resize(ref found, near);
-                        found[near - 1] = Sequence[i];
+                        near++;                        
+                        found += this.Sequence[i];
                     }
                 }
 
-                if (secretCombination[i] == Sequence[i])
+                if (secretCombination[i] == this.Sequence[i])
                 {
-                    if (found.Any(x => x == Sequence[i]) && near > 0)
+                    if (found.Any(x => x == this.Sequence[i]) && near > 0)
                         near--;
                     exact++;
                 }

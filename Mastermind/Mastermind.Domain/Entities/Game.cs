@@ -1,33 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Configuration;
 
 namespace Mastermind.Domain.Entities
 {
     public class Game
     {
         public Game()
-        {
-            this.Sequence = GenerateSecretCombination(8);
+        {            
+            this.Colors = ConfigurationManager.AppSettings["colors"].Split(',');
+            this.SequenceLength = int.Parse(ConfigurationManager.AppSettings["sequenceLength"]);
+            this.Players = new HashSet<Player>();
+            this.Guesses = new HashSet<Guess>();
+            this.Sequence = GenerateSecretSequence();
         }
 
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Id { get; set; }
-        public bool Mutiplayer { get; set; }
-        public List<Color> Sequence { get; set; }
+
+        [Required]
+        public int NumberOfPlayers { get; set; }
+
+        [Required]
+        public string Sequence { get; set; }
+
+        [Required]
+        public int Status { get; set; }
+
+        [Required]
+        public DateTime CreationDate { get; set; }
+
+        public virtual ICollection<Player> Players { get; set; }
+        public virtual ICollection<Guess> Guesses { get; set; }
 
 
-        private List<Color> GenerateSecretCombination(int colorCount)
+        [NotMapped]
+        public string[] Colors { get; private set; } 
+
+        [NotMapped]
+        public int SequenceLength { get; private set; } 
+
+
+
+        private string GenerateSecretSequence()
         {
-            Color[] colorTemp = new Color[colorCount];
+            var colors = this.Colors;
+            string sequence = string.Empty;
             Random randomNumbers = new Random();
-            for (int i = 0; i < colorCount; i++)
-            {
-                colorTemp[i] = (Color)randomNumbers.Next(0, 8);
-            }
 
-            return colorTemp.ToList();
+            for (int i = 0; i < colors.Length; i++)
+                sequence += colors[randomNumbers.Next(0, colors.Length - 1)];
+
+            return sequence;
         }
     }
 }

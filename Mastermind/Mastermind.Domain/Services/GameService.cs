@@ -3,14 +3,20 @@ using Mastermind.Domain.Interfaces.Repositories;
 using Mastermind.Domain.Interfaces.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mastermind.Domain.Services
 {
     public class GameService : ServiceBase<Game>, IGameService
     {
+        public GameService(IRepositoryBase<Game> repository) : base(repository) { }
+
+        public Task<IEnumerable<Game>> GetWaitingGames()
+        {
+            return _repository.GetAsync(g => g.NumberOfPlayers > 1 && g.Status == 0 && g.CreationDate >= DateTime.Now.AddMinutes(-10), null, g => g.Players);
+        }
+
+        /*
         private short ColorCount = 8;
 
         public GameService(IRepositoryBase<Game> repository) : base(repository)
@@ -57,9 +63,9 @@ namespace Mastermind.Domain.Services
             }
 
             return new Hits() {ExactCount = exact, NearCount = exact};
-        }
+        }*/
 
-       
+
     }
 
 }

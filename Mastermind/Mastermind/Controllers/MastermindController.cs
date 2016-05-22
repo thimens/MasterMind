@@ -1,20 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
 using Mastermind.Models;
+using Mastermind.Application.Interfaces;
+using Mastermind.Domain.Entities;
+using Mastermind.ViewModels;
 
 namespace Mastermind.Controllers
 {
     public class MastermindController : ApiController
     {
-        [HttpPost]
-        public InitialGameUserData NewGame(string nickName)
+        private readonly IGameAppService _gameAppService;
+
+        public MastermindController(IGameAppService gameAppService)
         {
+            _gameAppService = gameAppService;
+        }
+        [HttpPost]
+        public Game NewGame([FromBody] NewGameModel model)
+        {
+            return _gameAppService.Create(model.Nickname, model.NumberOfPlayers);
             // iniciar jogo
-            return new InitialGameUserData();
+            //return new InitialGameUserData();
         }
 
         [HttpPost]

@@ -10,13 +10,13 @@ namespace Mastermind.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
-    using Domain.Interfaces.Repositories;
-    using Infra.Data.Repositories;
     using Domain.Interfaces.Services;
+    using Domain.Interfaces.Repositories;
     using Mehdime.Entity;
     using Application.Interfaces;
     using Application;
     using Domain.Services;
+    using Infra.Data.Repositories;
     public static class NinjectWebCommon 
     {
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
@@ -52,6 +52,7 @@ namespace Mastermind.App_Start
                 kernel.Bind<IHttpModule>().To<HttpApplicationInitializationHttpModule>();
 
                 RegisterServices(kernel);
+                
                 return kernel;
             }
             catch
@@ -75,14 +76,14 @@ namespace Mastermind.App_Start
             kernel.Bind<IGuessService>().To<GuessService>();
 
 
-            kernel.Bind<IDbContextScopeFactory>().To<DbContextScopeFactory>();
+            kernel.Bind<IDbContextScopeFactory>().ToConstructor(ctorArg => new DbContextScopeFactory(null));
             kernel.Bind<IAmbientDbContextLocator>().To<AmbientDbContextLocator>();
 
             kernel.Bind(typeof(IAppServiceBase<>)).To(typeof(AppServiceBase<>));
             kernel.Bind<IGameAppService>().To<GameAppService>();
-            kernel.Bind<IGuessAppService>().To<GuessAppService>();
-            
+            //kernel.Bind<IGuessAppService>().To<GuessAppService>();
+
             //kernel.Bind<IMapper>().ToConstant<IMapper>(AutoMapperConfig.RegisterMappings()).InSingletonScope();
-        }        
+        }
     }
 }

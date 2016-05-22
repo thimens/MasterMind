@@ -1,12 +1,8 @@
 ﻿
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Mastermind.Application.Interfaces;
-using Mastermind.Domain.Interfaces.Repositories;
-using Mastermind.Infra.Data.Context;
 using Mastermind.Domain.Interfaces.Services;
 using Mehdime.Entity;
 

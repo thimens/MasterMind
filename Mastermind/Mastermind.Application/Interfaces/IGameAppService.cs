@@ -1,13 +1,14 @@
 ﻿using Mastermind.Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mastermind.Application.Interfaces
 {
-    public interface IGameAppService : IAppServiceBase<Game>
+    public interface IGameAppService
     {
+        Game Create(string playerName, int numberOfPlayers);
+        Game Join(string playerName, string gameId);
+        Task<IEnumerable<Game>> GetWaitingGames();
+        Game Guess(string playerId, string gameId, string sequence);
     }
 }
