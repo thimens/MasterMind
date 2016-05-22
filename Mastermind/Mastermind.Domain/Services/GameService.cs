@@ -12,61 +12,14 @@ namespace Mastermind.Domain.Services
     {
         public GameService(IRepositoryBase<Game> repository) : base(repository) { }
 
+        /// <summary>
+        /// Return a list of games that are waiting players to join to. Only games that are open for less than 10 min are returned
+        /// </summary>
+        /// <returns>List of games</returns>
         public Task<IEnumerable<Game>> GetWaitingGames()
         {
             return _repository.GetAsync(g => g.NumberOfPlayers > 1 && g.Status == 0 && g.CreationDate >= DbFunctions.AddMinutes(DateTime.Now, -10), null, g => g.Players, g => g.Guesses);
         }
-
-        /*
-        private short ColorCount = 8;
-
-        public GameService(IRepositoryBase<Game> repository) : base(repository)
-        {
-        }
-
-        public Color[] GenerateSecretCombination()
-        {
-            Color[] colorTemp = new Color[ColorCount];
-            Random randomNumbers = new Random();
-            for (int i = 0; i < ColorCount; i++)
-            {
-                colorTemp[i] = (Color)randomNumbers.Next(0, 8);
-            }
-
-            return colorTemp;
-        }
-
-        public Hits CheckHits(Color[] guess, Color[] secretCombination)
-        {
-            var near = 0;
-            var exact = 0;
-
-            Color[] found = new Color[0];
-
-            for (int i = 0; i < ColorCount; i++)
-            {
-                if (secretCombination.Any(x => x == guess[i]))
-                {
-                    if (!found.Any(x => x == guess[i]))
-                    {
-                        near++;
-                        Array.Resize(ref found, near);
-                        found[near - 1] = guess[i];
-                    }
-                }
-
-                if (secretCombination[i] == guess[i])
-                {
-                    if (found.Any(x => x == guess[i]) && near > 0)
-                        near--;
-                    exact++;
-                }
-            }
-
-            return new Hits() {ExactCount = exact, NearCount = exact};
-        }*/
-
-
     }
 
 }

@@ -22,6 +22,12 @@ namespace Mastermind.Application
             _guessService = guessService;
         }
 
+        /// <summary>
+        /// Create a new game
+        /// </summary>
+        /// <param name="playerName"></param>
+        /// <param name="numberOfPlayers"></param>
+        /// <returns>Game info</returns>
         public Game Create(string playerName, int numberOfPlayers)
         {
             using (IDbContextScope contextScope = _dbContextFactory.Create())
@@ -53,6 +59,13 @@ namespace Mastermind.Application
             }
         }
 
+        /// <summary>
+        /// Verify the player's guess
+        /// </summary>
+        /// <param name="playerId"></param>
+        /// <param name="gameId"></param>
+        /// <param name="sequence">the player's guess</param>
+        /// <returns>Game info</returns>
         public async Task<Game> Guess(Guid playerId, Guid gameId, string sequence)
         {
             using (IDbContextScope contextScope = _dbContextFactory.Create())
@@ -109,6 +122,12 @@ namespace Mastermind.Application
             }
         }
 
+        /// <summary>
+        /// Join a new player to an existing game
+        /// </summary>
+        /// <param name="playerName"></param>
+        /// <param name="gameId"></param>
+        /// <returns>Game info</returns>
         public async Task<Game> Join(string playerName, Guid gameId)
         {
             using (IDbContextScope contextScope = _dbContextFactory.Create())
