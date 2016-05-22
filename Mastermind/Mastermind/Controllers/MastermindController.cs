@@ -41,7 +41,7 @@ namespace Mastermind.Controllers
         [HttpPost]
         public async Task<GameResultModel> Guess([FromBody] GuessModel model)
         {
-            return _mapper.Map<Game, GameResultModel>(await _gameAppService.Guess(model.PlayerId, model.GameId, model.Sequence));
+            return _mapper.Map<Game, GameResultModel>(await _gameAppService.Guess(model.PlayerId, model.GameId, model.Sequence.ToUpper()));
         }
 
         [HttpGet]
