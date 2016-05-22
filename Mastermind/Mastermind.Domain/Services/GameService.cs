@@ -3,6 +3,7 @@ using Mastermind.Domain.Interfaces.Repositories;
 using Mastermind.Domain.Interfaces.Services;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Threading.Tasks;
 
 namespace Mastermind.Domain.Services
@@ -13,7 +14,7 @@ namespace Mastermind.Domain.Services
 
         public Task<IEnumerable<Game>> GetWaitingGames()
         {
-            return _repository.GetAsync(g => g.NumberOfPlayers > 1 && g.Status == 0 && g.CreationDate >= DateTime.Now.AddMinutes(-10), null, g => g.Players);
+            return _repository.GetAsync(g => g.NumberOfPlayers > 1 && g.Status == 0 && g.CreationDate >= DbFunctions.AddMinutes(DateTime.Now, -10), null, g => g.Players, g => g.Guesses);
         }
 
         /*

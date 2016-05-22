@@ -43,19 +43,19 @@ namespace Mastermind.Application
             }            
         }
 
-        public Task<IEnumerable<Game>> GetWaitingGames()
+        public async Task<IEnumerable<Game>> GetWaitingGames()
         {
             using (IDbContextReadOnlyScope contextScope = _dbContextFactory.CreateReadOnly())
             {
-                return _gameService.GetWaitingGames();
+                return await _gameService.GetWaitingGames();
             }
         }
 
-        public Game Guess(Guid playerId, Guid gameId, string sequence)
+        public async Task<Game> Guess(Guid playerId, Guid gameId, string sequence)
         {
             using (IDbContextScope contextScope = _dbContextFactory.Create())
             {
-                var game = _gameService.GetAsync(gameId).Result;
+                var game = await _gameService.GetAsync(gameId);
 
                 //check if game exists
                 if (game == null)
@@ -65,16 +65,18 @@ namespace Mastermind.Application
                 if (!game.Players.Any(p => p.Id == playerId))
                     throw new ApplicationException("Player dont belong to this game");
 
-                var gameGuesses = _guessService.GetAllByGame(gameId).Result;
-                var playerGuesses = gameGuesses.Where(g => g.PlayerId == playerId);
-                
-                //check if there are players 
-                if (gameGuesses.GroupBy(g=> g.PlayerId).Min(g => g.Count()) < playerGuesses.Count())
-                    throw new ApplicationException("Wait for other players guess");
+                var playerGuesses = game.Players.First(p => p.Id == playerId).Guesses;
 
-                //check if the game is finished
-                if (gameGuesses.GroupBy(g => g.PlayerId).Min(g => g.Count()) == gameGuesses.GroupBy(g => g.PlayerId).Max(g => g.Count()) && game.Status == 2)
-                    throw new ApplicationException("Game is finished");
+                if (game.Guesses.Count() > 0)
+                {
+                    //check if there are players that didnt play
+                    if (game.Players.Select(p => p.Guesses.Count).Min() < playerGuesses.Count())
+                        throw new ApplicationException("Wait for other players guess");
+
+                    //check if the game is finished
+                    if (game.Players.Select(p => p.Guesses.Count).Min() == game.Players.Select(p => p.Guesses.Count).Max() && game.Status == 2)
+                        throw new ApplicationException("Game is finished");
+                }
 
                 var guess = new Guess()
                 {
@@ -93,6 +95,8 @@ namespace Mastermind.Application
                     game.Players.First(p => p.Id == playerId).Winner = true;
                 }
 
+                game.Guesses.Add(guess);
+
                 _gameService.Update(game);
                 contextScope.SaveChanges();
 
@@ -100,11 +104,11 @@ namespace Mastermind.Application
             }
         }
 
-        public Game Join(string playerName, Guid gameId)
+        public async Task<Game> Join(string playerName, Guid gameId)
         {
             using (IDbContextScope contextScope = _dbContextFactory.Create())
             {
-                var game = _gameService.GetAsync(gameId).Result;
+                var game = await _gameService.GetAsync(gameId);
 
                 //check if game exists
                 if (game == null)

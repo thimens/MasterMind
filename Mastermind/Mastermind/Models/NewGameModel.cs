@@ -1,4 +1,4 @@
-﻿namespace Mastermind.ViewModels
+﻿namespace Mastermind.Models
 {
     public class NewGameModel
     {

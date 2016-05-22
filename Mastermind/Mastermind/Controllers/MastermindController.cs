@@ -3,7 +3,9 @@ using System.Web.Http;
 using Mastermind.Models;
 using Mastermind.Application.Interfaces;
 using Mastermind.Domain.Entities;
-using Mastermind.ViewModels;
+using Mastermind.Models;
+using System;
+using System.Threading.Tasks;
 
 namespace Mastermind.Controllers
 {
@@ -24,27 +26,28 @@ namespace Mastermind.Controllers
         }
 
         [HttpPost]
-        public InitialGameUserData JoinGame(string nickName, string gameId)
+        public async Task<Game> JoinGame([FromBody] JoinGameModel model)
         {
+            return await _gameAppService.Join(model.Nickname, model.GameId);
             // Verificar:
             //   - gameId existe?
             //   - Jogo está em andamento?
             //   - Jogo já possui 2 jogadores?
             //
             // Se tudo ok, incluir este usuário no jogo
-            return new InitialGameUserData();
+            //return new InitialGameUserData();
         }
 
         [HttpPost]
-        public GuessResult Guess(string[] colorGuess, string nickName, string gameId)
+        public async Task<Game> Guess([FromBody] GuessModel model)
         {
-            return new GuessResult();
+            return await _gameAppService.Guess(model.PlayerId, model.GameId, model.Sequence);
         }
 
         [HttpGet]
-        public List<string> GamesAvailable()
+        public async Task<IEnumerable<Game>> GamesAvailable()
         {
-            return new List<string>();
+            return await _gameAppService.GetWaitingGames();
         }
     }
 }

@@ -8,8 +8,8 @@ namespace Mastermind.Application.Interfaces
     public interface IGameAppService
     {
         Game Create(string playerName, int numberOfPlayers);
-        Game Join(string playerName, Guid gameId);
+        Task<Game> Join(string playerName, Guid gameId);
         Task<IEnumerable<Game>> GetWaitingGames();
-        Game Guess(Guid playerId, Guid gameId, string sequence);
+        Task<Game> Guess(Guid playerId, Guid gameId, string sequence);
     }
 }
