@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using Mastermind.Domain.Entities;
 using Mastermind.Models;
+using System;
 
 namespace Mastermind.AutoMapper
 {
@@ -22,7 +20,7 @@ namespace Mastermind.AutoMapper
                 .ForMember(d => d.GameId, opt => opt.MapFrom(s => s.Id.ToString()))
                 .ForMember(d => d.Status, opt => opt.MapFrom(s => s.Status == 0 ? "Waiting players" : s.Status == 1 ? "Playing" : "Solved"))
                 .ForMember(d => d.Players, opt => opt.MapFrom(s => s.Players))
-                .ForMember(d => d.Round, opt => opt.MapFrom(s => s.Guesses.Where(g => g.PlayerId == s.PlayerId).Count() + 1))
+                .ForMember(d => d.Round, opt => opt.MapFrom(s => s.PlayerId == default(Guid) ? 1 : s.Players.First(p => p.Id == s.PlayerId).Guesses.Count() + 1))
                 .IgnoreAllNonExisting();
         }
     }

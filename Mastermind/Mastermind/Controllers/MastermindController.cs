@@ -4,7 +4,6 @@ using Mastermind.Models;
 using Mastermind.Application.Interfaces;
 using Mastermind.Domain.Entities;
 using System.Threading.Tasks;
-using System.Linq;
 using AutoMapper;
 
 namespace Mastermind.Controllers
@@ -27,9 +26,9 @@ namespace Mastermind.Controllers
         }
 
         [HttpPost]
-        public async Task<Game> JoinGame([FromBody] JoinGameModel model)
+        public async Task<GameResultModel> JoinGame([FromBody] JoinGameModel model)
         {
-            return await _gameAppService.Join(model.Nickname, model.GameId);
+            return _mapper.Map<Game, GameResultModel>(await _gameAppService.Join(model.Nickname, model.GameId));
             // Verificar:
             //   - gameId existe?
             //   - Jogo está em andamento?
@@ -40,15 +39,15 @@ namespace Mastermind.Controllers
         }
 
         [HttpPost]
-        public async Task<Game> Guess([FromBody] GuessModel model)
+        public async Task<GameResultModel> Guess([FromBody] GuessModel model)
         {
-            return await _gameAppService.Guess(model.PlayerId, model.GameId, model.Sequence);
+            return _mapper.Map<Game, GameResultModel>(await _gameAppService.Guess(model.PlayerId, model.GameId, model.Sequence));
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Game>> GamesAvailable()
+        public async Task<IEnumerable<GameResultModel>> GamesAvailable()
         {
-            return await _gameAppService.GetWaitingGames();
+            return _mapper.Map<IEnumerable<Game>, IEnumerable<GameResultModel>>(await _gameAppService.GetWaitingGames());
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Mastermind.Models
+﻿namespace Mastermind.Models
 {
     public class GuessResultModel
     {
