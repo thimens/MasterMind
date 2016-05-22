@@ -40,9 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppServiceBase.cs" />
     <Compile Include="GameAppService.cs" />
-    <Compile Include="Interfaces\IAppServiceBase.cs" />
     <Compile Include="Interfaces\IGameAppService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
