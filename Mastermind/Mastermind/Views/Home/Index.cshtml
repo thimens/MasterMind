@@ -32,7 +32,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <h4>POST /api/NewGame</h4>
+        <h4>POST /api/mastermind/NewGame</h4>
         <p>Starts a new game, requiring fields 'Nickname' and 'NumberOfPlayers'</p>
         <h5>Returns</h5>
         <p>
@@ -65,7 +65,7 @@
         </p>
     </div>
     <div class="col-md-4">
-        <h4>POST /api/JoinGame</h4>
+        <h4>POST /api/mastermind/JoinGame</h4>
         <p>Allows a second player join in a existing two player game. Requires fields 'Nickname' and 'GameId' </p>
         <h5>Returns</h5>
         <p>
@@ -100,7 +100,7 @@
         </p>
     </div>
     <div class="col-md-4">
-        <h4>GET /api/GamesAvailable</h4>
+        <h4>GET /api/mastermind/GamesAvailable</h4>
         <p>Returns the list of available games created in the last 10 minutes, these are the games created for more than one player and are waiting others to join </p>
         <h5>Returns</h5>
         <p>
@@ -138,7 +138,7 @@
         </p>
     </div>
     <div class="col-md-4">
-        <h4>POST /api/Guess</h4>
+        <h4>POST /api/mastermind/Guess</h4>
         <p>Allows a player make a guess. Requires the fields 'GameId', 'PlayerId', 'Sequence' </p>
         <h5>Returns</h5>
         <p>
